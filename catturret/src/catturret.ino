@@ -7,6 +7,7 @@
 Same as in the Blink an LED example:
 led1 is D0, led2 is D7 */
 
+Servo horizontal;
 int led1 = D2;
 int led2 = D7;
 
@@ -22,11 +23,15 @@ void setup()
 
    // We are also going to declare a Particle.function so that we can turn the LED on and off from the cloud.
    Particle.function("led",ledToggle);
+   Particle.function("horizontal",setHorizontal);
+
    // This is saying that when we ask the cloud for the function "led", it will employ the function ledToggle() from this app.
 
    // For good measure, let's also make sure both LEDs are off when we start:
    digitalWrite(led1, LOW);
    digitalWrite(led2, LOW);
+
+   horizontal.attach(1);
 
 }
 
@@ -65,4 +70,10 @@ int ledToggle(String command) {
     else {
         return -1;
     }
+}
+
+int setHorizontal(String value){
+  int degree = constrain( value.toInt(), 0 , 180);
+  horizontal.write(degree);
+  return 1;
 }
