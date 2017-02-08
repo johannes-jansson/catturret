@@ -25,7 +25,7 @@ It blinks the D7 LED on your Particle device. If you have an LED wired to D0, it
 // First, we're going to make some variables.
 // This is our "shorthand" that we'll use throughout the program:
 
-int led1 = D0; // Instead of writing D0 over and over again, we'll write led1
+int led1 = D1; // Instead of writing D0 over and over again, we'll write led1
 // You'll need to wire an LED to this one to see it blink.
 
 int led2 = D7; // Instead of writing D7 over and over again, we'll write led2
