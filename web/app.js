@@ -64,13 +64,13 @@ $(function(){
       if(currentLaser != lastLaserSent){
         lastLaserSent = currentLaser;
         console.log("send value:"+currentLaser);
-        particle.callFunction({ deviceId: deviceId, name: 'led', argument: String(currentLaser), auth: token });
+        particle.callFunction({ deviceId: deviceId, name: 'setLaser', argument: String(currentLaser), auth: token });
         $("#status").html("Sending");
       }
       if(currentBananas != lastBananasSent){
         lastBananasSent = currentBananas;
         console.log("send value:"+currentBananas);
-        particle.callFunction({ deviceId: deviceId, name: 'goBananas', argument: String(currentBananas), auth: token });
+        particle.callFunction({ deviceId: deviceId, name: 'setGoBananas', argument: String(currentBananas), auth: token });
         $("#status").html("Sending");
       }
       if(currentHorizontal != lastHorizontalSent){
