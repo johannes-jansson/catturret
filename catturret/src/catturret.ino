@@ -2,7 +2,9 @@ Servo horizontal;
 Servo vertical;
 int led1 = D2;
 int led2 = D7;
-
+int horizontalPin = 1;
+int verticalPin = 2;
+int buttonPin = D3;
 bool goBananas = false;
 bool laser = false;
 
@@ -13,6 +15,11 @@ void setup()
    // Here's the pin configuration, same as last time
    pinMode(led1, OUTPUT);
    pinMode(led2, OUTPUT);
+   // For input, we define the
+  // pushbutton as an input-pullup
+  // this uses an internal pullup resistor
+  // to manage consistent reads from the device
+    pinMode( buttonPin , INPUT_PULLUP); // sets pin as input
 
    // We are also going to declare a Particle.function so that we can turn the LED on and off from the cloud.
    Particle.function("setLaser",setLaser);
@@ -28,8 +35,11 @@ void setup()
    digitalWrite(led1, LOW);
    digitalWrite(led2, LOW);
 
-   horizontal.attach(1);
-   vertical.attach(1);
+   horizontal.attach(horizontalPin);
+   vertical.attach(verticalPin);
+
+
+
 
 }
 
@@ -40,6 +50,33 @@ we don't actually need to put anything in the loop */
 
 void loop()
 {
+
+  // find out if the button is pushed
+   // or not by reading from it.
+   int buttonState = digitalRead( buttonPin );
+
+  // remember that we have wired the pushbutton to
+  // ground and are using a pulldown resistor
+  // that means, when the button is pushed,
+  // we will get a LOW signal
+  // when the button is not pushed we'll get a HIGH
+
+  // let's use that to set our LED on or off
+
+  if( buttonState == LOW )
+  {
+    // turn the LED and goBananas On
+    digitalWrite( led1, HIGH);
+    digitalWrite( led2, HIGH);
+    goBananas = true;
+
+  }else{
+    // otherwise
+    // turn the LED and goBananas Off
+    digitalWrite( led1, LOW);
+    digitalWrite( led2, LOW);
+    goBananas = false;
+  }
   if(goBananas==true){
     setHorizontal(random(0,180));
     setVertical(random(0, 180));
