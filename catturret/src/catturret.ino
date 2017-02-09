@@ -48,6 +48,7 @@ void loop()
 {
   if(goBananas==true){
     setHorizontal(random(0,180));
+    setVertical(random(0, 180));
     delay(5000);
   }
 }
