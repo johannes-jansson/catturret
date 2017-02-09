@@ -69,11 +69,18 @@ void loop()
       digitalWrite( led1, HIGH);
       digitalWrite( led2, HIGH);
       int clock = 0;
-      while (clock < 60){
-        setHorizontal(random(0,180));
-        setVertical(random(0, 180));
-        clock = clock + 1;
-        delay(5000);
+      while (clock < 600 ){
+        if(clock % 10 == 0) {
+          setHorizontal(random(0,180));
+          setVertical(random(0, 180));
+        }
+        clock ++;
+        delay(500);
+        buttonState = digitalRead( buttonPin );
+        if (buttonState == LOW){
+            clock = 600;
+            delay(1000);
+        }
       }
     }else{
       // otherwise
