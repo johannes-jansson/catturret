@@ -10,7 +10,7 @@ led1 is D0, led2 is D7 */
 Servo horizontal;
 int led1 = D2;
 int led2 = D7;
-
+bool goBananas = false;
 // Last time, we only needed to declare pins in the setup function.
 // This time, we are also going to register our Particle function
 
@@ -23,7 +23,8 @@ void setup()
 
    // We are also going to declare a Particle.function so that we can turn the LED on and off from the cloud.
    Particle.function("led",ledToggle);
-   Particle.function("horizontal",setHorizontal);
+   Particle.function("horizontal",cloudSetHorizontal);
+   Particle.function("goBananas",cloudSetGoBananas);
 
    // This is saying that when we ask the cloud for the function "led", it will employ the function ledToggle() from this app.
 
@@ -42,7 +43,9 @@ we don't actually need to put anything in the loop */
 
 void loop()
 {
-   // Nothing to do here
+  if(goBananas==true){
+    setHorizontal(random(0,181));
+  }
 }
 
 // We're going to have a super cool function now that gets called when a matching API request is sent
@@ -57,12 +60,12 @@ int ledToggle(String command) {
     and -1 if we received a totally bogus command that didn't do anything to the LEDs.
     */
 
-    if (command=="on") {
+    if (command=="true") {
         digitalWrite(led1,HIGH);
         digitalWrite(led2,HIGH);
         return 1;
     }
-    else if (command=="off") {
+    else if (command=="false") {
         digitalWrite(led1,LOW);
         digitalWrite(led2,LOW);
         return 0;
@@ -71,9 +74,26 @@ int ledToggle(String command) {
         return -1;
     }
 }
+int cloudSetGoBananas(String value){
+  if (value=="true") {
+    goBananas = true;
+    return 1;
+  }
+  else if (value == "false") {
+    goBananas = false;
+    return 0;
+  }
+  else {
+      return -1;
+  }
+}
 
-int setHorizontal(String value){
-  int degree = constrain( value.toInt(), 0 , 180);
+int setHorizontal(int value){
+  int degree = constrain( value, 0 , 180);
   horizontal.write(degree);
   return 1;
+}
+
+int cloudSetHorizontal(String value){
+  return setHorizontal(value.toInt());
 }
