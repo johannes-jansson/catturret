@@ -10,6 +10,9 @@ $(function(){
   var lastLaserSent = false;
   var currentLaser = false;
 
+  var lastBananasSent = false;
+  var currentBananas = false;
+
   var deviceId;
   var particle = new Particle();
   var token = "9065cadab38b15148ca87e8710f73cae44859102";
@@ -21,7 +24,7 @@ $(function(){
       console.log('Devices: ', devices);
       for (var i = 0; i < devices.body.length; i++) {
         var device = devices.body[i];
-        if(device.name=="coffeemaker"){
+        if(device.name=="coffemaker"){
           console.log("GOT IT");
           console.log(device);
           deviceId = device.id;
@@ -50,6 +53,11 @@ $(function(){
     console.log("Vertical: "+currentVertical);
   });
 
+  $("input[id=bananas]").on("click",function(){
+    currentBananas = ! currentBananas;
+    console.log("Bananas: "+currentBananas);
+  });
+
   setInterval(function(){
     if(deviceId){
       $("#status").html("Connected");
@@ -57,6 +65,12 @@ $(function(){
         lastLaserSent = currentLaser;
         console.log("send value:"+currentLaser);
         particle.callFunction({ deviceId: deviceId, name: 'led', argument: String(currentLaser), auth: token });
+        $("#status").html("Sending");
+      }
+      if(currentBananas != lastBananasSent){
+        lastBananasSent = currentBananas;
+        console.log("send value:"+currentBananas);
+        particle.callFunction({ deviceId: deviceId, name: 'goBananas', argument: String(currentBananas), auth: token });
         $("#status").html("Sending");
       }
       if(currentHorizontal != lastHorizontalSent){
