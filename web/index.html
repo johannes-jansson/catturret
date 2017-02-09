@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Cat Turret Dashboard</title>
+
+    <style>
+    
+      body {
+        color: white;
+        font-family: Helvetica Neue, Helvetica;
+        background-color: #000;
+      } 
+
+      input {
+        width: 100%;
+      }
+      label {
+        font-size:11;
+        display: block;
+        margin-bottom: 20px;
+      }
+    
+    </style>
+
+  </head>
+  <body>
+
+    <h1>
+    Cat Turret Dashboard
+    </h1>
+    <h4>Status: <span id="status"></span></h4>
+
+    <input type="button" id="laser" value="LASER"></input>
+    <br />
+
+    <label>Horizontal</label>
+    <input type="range" id="horizontal" min="0" max="180" value="0" step=".1">
+    <br />
+
+    <label>Vertical</label>
+    <input type="range" id="vertical" min="0" max="180" value="0" step=".1">
+
+    <script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="particle.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+
+  </body>
+</html>
+
