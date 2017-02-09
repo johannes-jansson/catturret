@@ -85,6 +85,16 @@ $(function(){
         particle.callFunction({ deviceId: deviceId, name: 'vertical', argument: String(currentVertical), auth: token });
         $("#status").html("Sending");
       }
+      if(currentLaser) {
+        document.getElementById("laser").style.background='red';
+      } else {
+        document.getElementById("laser").style.background='#FFFFFF';
+      }
+      if(currentBananas) {
+        document.getElementById("bananas").style.background='yellow';
+      } else {
+        document.getElementById("bananas").style.background='#FFFFFF';
+      }
     }
   },200);
 });
