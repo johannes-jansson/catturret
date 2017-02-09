@@ -8,6 +8,7 @@ Same as in the Blink an LED example:
 led1 is D0, led2 is D7 */
 
 Servo horizontal;
+Servo vertical;
 int led1 = D2;
 int led2 = D7;
 bool goBananas = false;
@@ -24,6 +25,7 @@ void setup()
    // We are also going to declare a Particle.function so that we can turn the LED on and off from the cloud.
    Particle.function("led",ledToggle);
    Particle.function("horizontal",cloudSetHorizontal);
+   Particle.function("vertical",cloudSetVertical);
    Particle.function("goBananas",cloudSetGoBananas);
 
    // This is saying that when we ask the cloud for the function "led", it will employ the function ledToggle() from this app.
@@ -33,6 +35,7 @@ void setup()
    digitalWrite(led2, LOW);
 
    horizontal.attach(1);
+   vertical.attach(1);
 
 }
 
@@ -44,7 +47,8 @@ we don't actually need to put anything in the loop */
 void loop()
 {
   if(goBananas==true){
-    setHorizontal(random(0,181));
+    setHorizontal(random(0,180));
+    delay(5000);
   }
 }
 
@@ -89,11 +93,19 @@ int cloudSetGoBananas(String value){
 }
 
 int setHorizontal(int value){
-  int degree = constrain( value, 0 , 180);
+  int degree = constrain( value, 0 , 179);
   horizontal.write(degree);
+  return 1;
+}
+int setVertical(int value){
+  int degree = constrain( value, 0, 179);
+  vertical.write(degree);
   return 1;
 }
 
 int cloudSetHorizontal(String value){
   return setHorizontal(value.toInt());
+}
+int cloudSetVertical(String value){
+  return setVertical(value.toInt());
 }
