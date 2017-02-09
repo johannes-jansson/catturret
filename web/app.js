@@ -79,12 +79,12 @@ $(function(){
         particle.callFunction({ deviceId: deviceId, name: 'horizontal', argument: String(currentHorizontal), auth: token });
         $("#status").html("Sending");
       }
-      //if(currentVertical != lastVerticalSent){
-      //  lastVerticalSent = currentVertical;
-      //  console.log("send value:"+currentVertical);
-      //  particle.callFunction({ deviceId: deviceId, name: 'vertical', argument: String(currentVertical), auth: token });
-      //  $("#status").html("Sending");
-      //}
+      if(currentVertical != lastVerticalSent){
+        lastVerticalSent = currentVertical;
+        console.log("send value:"+currentVertical);
+        particle.callFunction({ deviceId: deviceId, name: 'vertical', argument: String(currentVertical), auth: token });
+        $("#status").html("Sending");
+      }
     }
   },200);
 });
