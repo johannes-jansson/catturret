@@ -1,11 +1,11 @@
 Servo horizontal;
 Servo vertical;
-int led1 = D2;
+int led1 = D6;
 int led2 = D7;
 int horizontalPin = 1;
 int verticalPin = 2;
 int buttonPin = D3;
-bool goBananas = false;
+bool goBananas = true;
 bool laser = false;
 
 
@@ -32,8 +32,8 @@ void setup()
    // This is saying that when we ask the cloud for the function "led", it will employ the function ledToggle() from this app.
 
    // For good measure, let's also make sure both LEDs are off when we start:
-   digitalWrite(led1, LOW);
-   digitalWrite(led2, LOW);
+   digitalWrite(led1, HIGH);
+   digitalWrite(led2, HIGH);
 
    horizontal.attach(horizontalPin);
    vertical.attach(verticalPin);
@@ -63,7 +63,7 @@ void loop()
 
   // let's use that to set our LED on or off
 
-  if( buttonState == LOW )
+  /*if( buttonState == LOW )
   {
     // turn the LED and goBananas On
     digitalWrite( led1, HIGH);
@@ -76,7 +76,7 @@ void loop()
     digitalWrite( led1, LOW);
     digitalWrite( led2, LOW);
     goBananas = false;
-  }
+  }*/
   if(goBananas==true){
     setHorizontal(random(0,180));
     setVertical(random(0, 180));
@@ -133,12 +133,14 @@ int getGoBananas(String value) {
 }
 
 int setHorizontal(int value){
-  int degree = constrain( value, 0 , 179);
+  //int degree = constrain( value, 0 , 179);
+  int degree = constrain( value, 75 , 105);
   horizontal.write(degree);
   return 1;
 }
 int setVertical(int value){
-  int degree = constrain( value, 0, 179);
+  //int degree = constrain( value, 0, 179);
+  int degree = constrain( value, 75, 105);
   vertical.write(degree);
   return 1;
 }
